@@ -10,6 +10,24 @@ TEST(TSet, can_get_max_power_set)
   EXPECT_EQ(size, set.GetMaxPower());
 }
 
+TEST(TSet, can_create_set_by_copying)
+{
+    TSet bs1(5);
+    ASSERT_NO_THROW(TSet bs(bs1));
+}
+
+TEST(TSet, throws_when_create_set_by_copying_set_with_negative_length)
+{
+    ASSERT_ANY_THROW(TSet(TSet(-5)));
+}
+
+TEST(TSet, correct_set_maxpower_when_copying)
+{
+    TSet bs0(5);
+    TSet bs(bs0);
+    EXPECT_EQ(bs0.GetMaxPower(), bs.GetMaxPower());
+}
+
 TEST(TSet, can_insert_non_existing_element)
 {
   const int size = 5, k = 3;

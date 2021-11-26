@@ -7,6 +7,12 @@ TEST(TBitField, can_create_bitfield_with_positive_length)
   ASSERT_NO_THROW(TBitField bf(3));
 }
 
+TEST(TBitField, can_create_bitfield_by_copying)
+{
+    TBitField bf1(5);
+    ASSERT_NO_THROW(TBitField bf(bf1));
+}
+
 TEST(TBitField, can_get_length)
 {
   TBitField bf(3);
@@ -37,6 +43,19 @@ TEST(TBitField, can_set_bit)
   EXPECT_NE(0, bf.GetBit(3));
 }
 
+TEST(TBitField, double_set_bit)
+{
+    TBitField bf(5);
+    
+
+    EXPECT_EQ(0, bf.GetBit(3));
+
+    bf.SetBit(3);
+    bf.SetBit(3);
+
+    EXPECT_NE(0, bf.GetBit(3));
+}
+
 TEST(TBitField, can_clear_bit)
 {
   TBitField bf(10);
@@ -53,6 +72,18 @@ TEST(TBitField, can_clear_bit)
 TEST(TBitField, throws_when_create_bitfield_with_negative_length)
 {
   ASSERT_ANY_THROW(TBitField bf(-3));
+}
+
+TEST(TBitField, throws_when_create_bitfield_by_copying_bitfield_with_negative_length)
+{
+    ASSERT_ANY_THROW(TBitField(TBitField(-5)));
+}
+
+TEST(TBitField, correct_bitfield_size_when_copying)
+{
+    TBitField bf0(5);
+    TBitField bf(bf0);
+    EXPECT_EQ(bf0.GetLength(), bf.GetLength());
 }
 
 TEST(TBitField, throws_when_set_bit_with_negative_index)
